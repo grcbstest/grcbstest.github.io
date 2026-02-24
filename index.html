@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Кубическая панорама 360°</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        #pano {
+            width: 100%;
+            height: 100%;
+        }
+        #info {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: white;
+            background: rgba(0,0,0,0.5);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            pointer-events: none;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div id="pano"></div>
+    <div id="info">Кубическая панорама | Перетащите для осмотра</div>
+
+    <!-- Подключаем Marzipano из CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/marzipano@latest/dist/marzipano.js"></script>
+
+    <script>
+        // Функция для создания источника из кубических граней
+        function createCubeSource(basePath, format = 'jpg') {
+            // Marzipano ожидает массив из 6 URL в порядке: f, r, b, l, u, d
+            // (front, right, back, left, up, down)
+            const faces = ['f', 'r', 'b', 'l', 'u', 'd'];
+            const urls = faces.map(face => `${basePath}_${face}.${format}`);
+            
+            return Marzipano.ImageUrlSource.fromArray(urls);
+        }
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                // Создаем плеер
+                const viewer = new Marzipano.Viewer(document.getElementById('pano'));
+
+                // Путь к вашим изображениям (без суффикса _f, _r и т.д.)
+                const imageBasePath = 'images/002_cube';
+                
+                // Создаем источник из кубических граней
+                const source = createCubeSource(imageBasePath, 'jpg');
+
+                // Создаем геометрию для кубической панорамы
+                // Размер должен соответствовать вашим изображениям (3789px)
+                const geometry = new Marzipano.CubeGeometry([
+                    { tileSize: 3789, size: 3789 }
+                ]);
+
+                // Настраиваем ограничения просмотра
+                const view = new Marzipano.RectilinearView(
+                    { 
+                        yaw: 0,           // начальный поворот
+                        pitch: 0,          // начальный наклон
+                        fov: Math.PI / 3   // начальное поле зрения (60 градусов)
+                    },
+                    Marzipano.RectilinearView.limit.traditional(
+                        3789,              // максимальное разрешение
+                        Math.PI / 2        // максимальное поле зрения (90 градусов)
+                    )
+                );
+
+                // Создаем сцену
+                const scene = viewer.createScene({
+                    source: source,
+                    geometry: geometry,
+                    view: view,
+                    pinFirstLevel: true
+                });
+
+                // Показываем сцену
+                scene.switchTo();
+                
+                console.log('Панорама успешно загружена!');
+                
+            } catch (error) {
+                console.error('Ошибка при загрузке панорамы:', error);
+                document.getElementById('info').innerHTML = 'Ошибка загрузки. Проверьте консоль.';
+            }
+        });
+    </script>
+</body>
+</html>
