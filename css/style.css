@@ -1,0 +1,46 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+}
+
+#viewer {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* Стили для Pannellum */
+.pnlm-container {
+    background-color: #1a1a1a !important;
+}
+
+.pnlm-controls {
+    backdrop-filter: blur(5px);
+}
+
+.pnlm-compass {
+    background: rgba(255, 255, 255, 0.2) !important;
+}
+
+.custom-info {
+    position: absolute;
+    bottom: 100px;
+    left: 20px;
+    color: white;
+    background: rgba(0,0,0,0.5);
+    padding: 10px 20px;
+    border-radius: 30px;
+    backdrop-filter: blur(5px);
+    pointer-events: none;
+    z-index: 10;
+    font-size: 14px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
