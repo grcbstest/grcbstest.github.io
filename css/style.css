@@ -67,7 +67,6 @@ html, body {
     border-radius: 20px;
     font-size: 14px;
     border: 1px solid #4CAF50;
-    backdrop-filter: blur(5px);
 }
 
 .pnlm-loading {
@@ -101,3 +100,72 @@ html, body {
     max-width: 200px;
     max-height: 200px;
 }
+
+/* Базовые стили для хотспотов */
+.custom-hotspot-scene1,
+.custom-hotspot-scene2 {
+    width: 158.1px;
+    height: 66px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    border-radius: 0;
+}
+
+/* Хотспот для первой сцены */
+.custom-hotspot-scene1 {
+    background-image: url('../images/hotspot1.webp');
+}
+
+/* Хотспот для второй сцены */
+.custom-hotspot-scene2 {
+    background-image: url('../images/hotspot2.webp');
+}
+
+/* Стили для подсказки */
+.pnlm-tooltip span {
+    background: rgba(127, 95, 67, 0.8)!important;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px!important;
+    font-size: 14px;
+	bottom: 96px!important;
+    white-space: nowrap;
+}
+
+.pnlm-tooltip:hover span:after {
+	border-color: rgba(127, 95, 67, 0.8) transparent transparent transparent!important;
+}
+
+/* Стили для дубликата хотспота */
+.hotspot-duplicate {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1001;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+/* Наследуем стили от оригинальных хотспотов */
+.hotspot-duplicate.custom-hotspot-scene1 {
+    background-image: url('../images/hotspot1_duplicate.webp');
+    width: 158.1px;
+    height: 66px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.hotspot-duplicate.custom-hotspot-scene2 {
+    background-image: url('../images/hotspot2_duplicate.webp');
+    width: 100px;
+    height: 100px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+
+
